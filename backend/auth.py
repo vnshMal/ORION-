@@ -1,24 +1,27 @@
 from jose import jwt
 from datetime import datetime, timedelta
-from passlib.context import CryptContext
+import bcrypt
 
 SECRET_KEY = "supersecretkey"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
 fake_users_db = {
     "admin": {
         "username": "admin",
-        "hashed_password": "$2b$12$h6X9YbrD2WmJT14Te9ET6uRL.xG8O.QmQrOp/0J/xYnxrAqWx1WMW",
+        "hashed_password": "$2b$12$usHN3mlemF/OZ8BKMPAZN.MJT0diveVB/Yur89WIUslouyDCLUPAO",
         "role": "admin"
     }
 }
 
 
 def verify_password(plain_password, hashed_password):
-    return pwd_context.verify(plain_password, hashed_password)
+    try:
+        return bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password.encode('utf-8'))
+    except Exception as e:
+        print("Bcrypt verify error:", e)
+        return False
+
 
 def authenticate_user(username: str, password: str):
     user = fake_users_db.get(username)
