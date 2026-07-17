@@ -1,2 +1,3 @@
 @echo off
-npx concurrently -c "cyan.bold,magenta.bold" -n "BACKEND,FRONTEND" "cd backend && uvicorn main:app --reload" "cd frontend && npm run dev"
+npx concurrently -c "cyan.bold,magenta.bold" -n "BACKEND,FRONTEND" "cd backend && " "cd frontend && npm run dev"
+uvicorn main:app --reload
