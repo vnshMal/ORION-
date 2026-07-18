@@ -59,8 +59,7 @@ def admin_route(user=Depends(get_current_user)):
     return {"message": "Welcome Admin"}
 
 
-import os
-DB_PATH = os.path.join(os.path.dirname(__file__), 'alerts.db')
+from database import DB_PATH
 
 @app.get("/heatmap")
 def heatmap_data():

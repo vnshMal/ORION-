@@ -2,3 +2,7 @@ venv/
 __pycache__/
 *.pyc
 .env
+*.db
+*.pkl
+*.pkl.tmp
+.vscode/

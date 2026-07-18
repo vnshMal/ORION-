@@ -5,7 +5,7 @@ from scapy.all import sniff
 
 from feature_extractor import extract_features
 from anomaly_detector import check_anomaly
-from backend.signature_detector import check_signature
+from signature_detector import check_signature
 
 from threat_score import calculate_threat_score
 from reputation_engine import update_reputation

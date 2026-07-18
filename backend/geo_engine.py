@@ -1,7 +1,9 @@
+import os
 import geoip2.database
 
+GEO_DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "GeoLite2-City.mmdb")
 try:
-    reader = geoip2.database.Reader("GeoLite2-City.mmdb")
+    reader = geoip2.database.Reader(GEO_DB_PATH)
 except Exception:
     reader = None
 

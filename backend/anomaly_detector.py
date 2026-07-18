@@ -1,8 +1,10 @@
+import os
 import pandas as pd
 import joblib
 
-# Load trained model
-model = joblib.load("model.pkl")
+# Load trained model using absolute path relative to this file
+MODEL_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "model.pkl")
+model = joblib.load(MODEL_PATH)
 
 
 def check_anomaly(features):

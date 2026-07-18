@@ -1,8 +1,12 @@
+import os
 import sqlite3
 from datetime import datetime
 
+# Centralized absolute path to alerts.db in the backend folder
+DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'alerts.db')
+
 def init_db():
-    conn = sqlite3.connect("alerts.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -19,7 +23,7 @@ def init_db():
 
 
 def save_alert(alert, src_ip):
-    conn = sqlite3.connect("alerts.db")
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute(

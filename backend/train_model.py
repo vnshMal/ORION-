@@ -6,7 +6,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, precision_score, recall_score
 
 
-train_path = "dataset/KDDTrain+.txt"
+import os
+
+backend_dir = os.path.dirname(os.path.abspath(__file__))
+train_path = os.path.join(backend_dir, "dataset", "KDDTrain+.txt")
 
 columns = [
     "duration","protocol_type","service","flag","src_bytes","dst_bytes","land",
@@ -47,10 +50,10 @@ y_pred = model.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred) * 100
 precision = precision_score(y_test, y_pred) * 100
 recall = recall_score(y_test, y_pred) * 100
-print(f"Model trained successfully 🚀")
-print(f"➜ Accuracy:  {accuracy:.2f}%")
-print(f"➜ Precision: {precision:.2f}%")
-print(f"➜ Recall:    {recall:.2f}%")
+print("Model trained successfully.")
+print(f"- Accuracy:  {accuracy:.2f}%")
+print(f"- Precision: {precision:.2f}%")
+print(f"- Recall:    {recall:.2f}%")
 # Save the model
-joblib.dump(model, "model.pkl")
-joblib.dump(le, "encoder.pkl")
+joblib.dump(model, os.path.join(backend_dir, "model.pkl"))
+joblib.dump(le, os.path.join(backend_dir, "encoder.pkl"))
