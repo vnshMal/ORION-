@@ -19,7 +19,5 @@ services:
     rootDir: frontend
     envVars:
       - key: NEXT_PUBLIC_API_URL
-        fromService:
-          name: orion-backend
-          type: web
-          property: url
+        value: https://orion-backend.onrender.com
+
