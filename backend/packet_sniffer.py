@@ -48,14 +48,31 @@ def process_packet(packet):
         if severity == "Critical":
             add_to_blacklist(src_ip)
 
-        # Save alert to DB
-        save_alert(
-            alert={
+        # Save alert
+        import os
+        import requests
+        api_url = os.getenv("ORION_API_URL")
+
+        if api_url:
+            alert_payload = {
                 "type": "Intrusion Detected",
-                "severity": severity
-            },
-            src_ip=src_ip
-        )
+                "severity": severity,
+                "src_ip": src_ip
+            }
+            try:
+                requests.post(f"{api_url}/api/v1/alerts/submit", json=alert_payload, timeout=5)
+            except Exception as e:
+                print(f"⚠️ Failed to send alert to cloud API: {e}")
+        else:
+            # Save alert to DB locally
+            save_alert(
+                alert={
+                    "type": "Intrusion Detected",
+                    "severity": severity
+                },
+                src_ip=src_ip
+            )
+
 
 
 def start_sniffing():

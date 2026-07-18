@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ShieldAlert, Lock, User, ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { API_URL } from "@/config";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
@@ -21,7 +22,7 @@ export default function LoginPage() {
       formData.append("username", username);
       formData.append("password", password);
 
-      const res = await fetch("http://127.0.0.1:8000/login", {
+      const res = await fetch(`${API_URL}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",

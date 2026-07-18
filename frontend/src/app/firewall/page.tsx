@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ShieldAlert, Plus, Trash2, Clock, ShieldCheck, Play, Power, RotateCw } from "lucide-react";
+import { API_URL } from "@/config";
 
 interface BlockedIP {
   ip: string;
@@ -23,7 +24,7 @@ export default function FirewallPage() {
   const fetchBlacklist = async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/v1/blacklist");
+      const res = await fetch(`${API_URL}/api/v1/blacklist`);
       if (!res.ok) throw new Error("Failed to fetch blacklist");
       const data = await res.json();
       setBlacklist(data.blacklist || []);
@@ -57,7 +58,7 @@ export default function FirewallPage() {
     e.preventDefault();
     if (!manualIp) return;
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/v1/blacklist", {
+      const res = await fetch(`${API_URL}/api/v1/blacklist`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ip: manualIp })
@@ -74,7 +75,7 @@ export default function FirewallPage() {
 
   const handleUnblock = async (ip: string) => {
     try {
-      const res = await fetch(`http://127.0.0.1:8000/api/v1/blacklist/${ip}`, {
+      const res = await fetch(`${API_URL}/api/v1/blacklist/${ip}`, {
         method: "DELETE"
       });
       if (res.ok) {

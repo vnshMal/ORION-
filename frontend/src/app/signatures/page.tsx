@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { FileCode, Plus, Trash2, Power, AlertTriangle, ShieldCheck, RefreshCw } from "lucide-react";
 import { AlertBadge } from "@/components/ui/AlertBadge";
+import { API_URL } from "@/config";
 
 interface Signature {
   id: number;
@@ -30,7 +31,7 @@ export default function SignaturesPage() {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/v1/signatures");
+      const res = await fetch(`${API_URL}/api/v1/signatures`);
       if (!res.ok) throw new Error("Failed to fetch signatures");
       const data = await res.json();
       setSignatures(data.signatures || []);
@@ -47,7 +48,7 @@ export default function SignaturesPage() {
 
   const handleToggle = async (id: number) => {
     try {
-      const res = await fetch(`http://127.0.0.1:8000/api/v1/signatures/${id}/toggle`, {
+      const res = await fetch(`${API_URL}/api/v1/signatures/${id}/toggle`, {
         method: "POST"
       });
       if (res.ok) {
@@ -62,7 +63,7 @@ export default function SignaturesPage() {
 
   const handleDelete = async (id: number) => {
     try {
-      const res = await fetch(`http://127.0.0.1:8000/api/v1/signatures/${id}`, {
+      const res = await fetch(`${API_URL}/api/v1/signatures/${id}`, {
         method: "DELETE"
       });
       if (res.ok) {
@@ -77,7 +78,7 @@ export default function SignaturesPage() {
     e.preventDefault();
     setSubmitting(true);
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/v1/signatures", {
+      const res = await fetch(`${API_URL}/api/v1/signatures`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, protocol, pattern, severity, active: true })

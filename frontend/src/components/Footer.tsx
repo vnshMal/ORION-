@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Database, Shield, Server, Terminal, Radio } from "lucide-react";
+import { API_URL } from "@/config";
 
 export function Footer() {
   const [latency, setLatency] = useState<number | null>(null);
@@ -12,7 +13,7 @@ export function Footer() {
     const checkBackend = async () => {
       const start = Date.now();
       try {
-        const res = await fetch("http://127.0.0.1:8000/", { cache: "no-store" });
+        const res = await fetch(`${API_URL}/`, { cache: "no-store" });
         if (res.ok) {
           setLatency(Date.now() - start);
           setDbStatus("connected");

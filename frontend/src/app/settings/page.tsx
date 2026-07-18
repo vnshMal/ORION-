@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Settings, Save, AlertTriangle, CheckCircle, Database, ShieldCheck, ToggleLeft } from "lucide-react";
+import { API_URL } from "@/config";
 
 export default function SettingsPage() {
   const [alertThreshold, setAlertThreshold] = useState(50);
@@ -15,7 +16,7 @@ export default function SettingsPage() {
   useEffect(() => {
     const fetchConfig = async () => {
       try {
-        const res = await fetch("http://127.0.0.1:8000/api/v1/config");
+        const res = await fetch(`${API_URL}/api/v1/config`);
         if (!res.ok) throw new Error("Failed to fetch configs");
         const data = await res.json();
         setAlertThreshold(data.alert_threshold);
@@ -36,7 +37,7 @@ export default function SettingsPage() {
     setSaving(true);
     setMessage(null);
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/v1/config", {
+      const res = await fetch(`${API_URL}/api/v1/config`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

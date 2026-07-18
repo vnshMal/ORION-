@@ -1,11 +1,12 @@
 import { Map } from "lucide-react";
 import { MapWrapper } from "@/components/MapWrapper";
+import { API_URL } from "@/config";
 
 export const revalidate = 0;
 
 async function getHeatmapPoints() {
   try {
-    const res = await fetch("http://127.0.0.1:8000/heatmap", { cache: "no-store", next: { revalidate: 0 } });
+    const res = await fetch(`${API_URL}/heatmap`, { cache: "no-store", next: { revalidate: 0 } });
     if (!res.ok) return [];
     const data = await res.json();
     return data.heatmap || [];

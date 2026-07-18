@@ -1,11 +1,12 @@
 import { AlertBadge } from "@/components/ui/AlertBadge";
 import { ShieldAlert, Search } from "lucide-react";
+import { API_URL } from "@/config";
 
 export const revalidate = 0;
 
 async function getAlerts() {
   try {
-    const res = await fetch("http://127.0.0.1:8000/alerts", { cache: "no-store" });
+    const res = await fetch(`${API_URL}/alerts`, { cache: "no-store" });
     if (!res.ok) return [];
     const data = await res.json();
     return data.alerts || [];

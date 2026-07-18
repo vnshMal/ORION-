@@ -6,6 +6,7 @@ from jose import jwt
 import sqlite3
 from auth import SECRET_KEY
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 
 app = FastAPI()
 
@@ -35,6 +36,26 @@ def home():
 @app.get("/api/v1/alerts")
 def external_alerts(user=Depends(get_current_user)):
     return get_alerts()
+
+
+class AlertSubmitItem(BaseModel):
+    src_ip: str
+    severity: str
+    type: str
+
+
+@app.post("/api/v1/alerts/submit")
+def submit_alert(item: AlertSubmitItem):
+    from database import save_alert
+    save_alert(
+        alert={
+            "type": item.type,
+            "severity": item.severity
+        },
+        src_ip=item.src_ip
+    )
+    return {"message": "Alert submitted successfully"}
+
 
 
 @app.post("/login")
